@@ -1,0 +1,21 @@
+version: '3'
+
+services:
+  jenkins:
+    image: jenkins/jenkins:lts
+    ports:
+      - "8080:8080"      # Jenkins 웹 UI 접속 포트
+      - "50000:50000"    # Jenkins 에이전트 통신 포트
+    volumes:
+      - jenkins_home:/var/jenkins_home              # Jenkins 데이터 영구 저장
+      - /var/run/docker.sock:/var/run/docker.sock   # Jenkins 컨테이너 내부에서 Docker 명령어 사용(DooD)
+    restart: always
+
+  app:
+    build: .             # 현재 디렉터리의 Dockerfile로 이미지 빌드
+    ports:
+      - "5000:5000"      # Python App 접속 포트
+    command: python app.py
+
+volumes:
+  jenkins_home:          # 도커 볼륨 정의
