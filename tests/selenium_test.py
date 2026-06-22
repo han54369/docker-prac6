@@ -10,6 +10,11 @@ def test_google_title():
     chrome_options.add_argument('--headless')
     chrome_options.add_argument('--no-sandbox')
     chrome_options.add_argument('--disable-dev-shm-usage')
+
+    # 아래 3줄 추가 (권한 회피 및 안정성 확보)
+    chrome_options.add_argument('--user-data-dir=/tmp/chrome-data')
+    chrome_options.add_argument('--disable-gpu')
+    chrome_options.add_argument('--remote-debugging-port=9222')
     
     # Alpine 리눅스에 설치된 Chromedriver 실제 경로 지정
     service = Service('/usr/bin/chromedriver')
